@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User List</title>
+</head>
+<body>
+    <h2>User List</h2>
+    
+    <!-- Link to Add New User -->
+    <a href="/add">Add New User</a>
+    
+    <!-- Display Users -->
+    <ul>
+        <li th:each="user : ${users}">
+            <b th:text="${user.name}"></b> - <span th:text="${user.email}"></span>
+        </li>
+    </ul>
+    
+    <!-- Pagination Controls -->
+    <div>
+        <span th:if="${currentPage > 0}">
+            <a th:href="@{/?page={page}&size={size}&sortBy={sortBy}(page=${currentPage-1}, size=${size}, sortBy=${'name'})}">Previous</a>
+        </span>
+        
+        <span>Page <span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></span>
+        
+        <span th:if="${currentPage < totalPages}">
+            <a th:href="@{/?page={page}&size={size}&sortBy={sortBy}(page=${currentPage+1}, size=${size}, sortBy=${'name'})}">Next</a>
+        </span>
+    </div>
+
+    <!-- Success Message -->
+    <div th:if="${success}" style="color: green;">
+        <p th:text="${success}"></p>
+    </div>
+</body>
+</html>
